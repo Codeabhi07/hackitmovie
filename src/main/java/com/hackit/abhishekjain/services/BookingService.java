@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hackit.abhishekjain.constants.Constants;
@@ -69,7 +70,10 @@ public class BookingService {
 	    return false;
     }
 	
-	public String confirmBooking(Long bookingId, String name, String email) throws MessagingException {
+	public String confirmBooking(Long bookingId, String userDetails) throws MessagingException {
+		JSONObject jsonObject= new JSONObject(userDetails);
+		String name = jsonObject.getString("name");
+		String email= jsonObject.getString("email");
 		Booking booking=bookingRepository.getById(bookingId);
 		booking.setStatus(Constants.CONFIRMED);
 		booking.setUserName(name);

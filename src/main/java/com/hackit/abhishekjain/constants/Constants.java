@@ -10,4 +10,5 @@ public class Constants {
 	public static final String SHOWID = "showid";
 	public static final String BOOKINGID = "bookingid";
 	public static final Long TIMEOUT = 300L;
+	public static final String APPURL = "https://hackitmoviez.herokuapp.com";
 }

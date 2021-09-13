@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hackit.abhishekjain.constants.Constants;
@@ -22,7 +22,8 @@ import com.hackit.abhishekjain.services.SeatService;
 
 
 @RestController
-@CrossOrigin(origins="*")
+@CrossOrigin(origins=Constants.APPURL)
+@RequestMapping("/api/v1")
 public class BaseController {
 
 	@Autowired
@@ -30,7 +31,6 @@ public class BaseController {
 	@Autowired
 	BookingService bookingService;
 	
-
 	@GetMapping(value="/getAllSeats/{showId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getAllSeats(@PathVariable("showId") String showId) {
 		try {
@@ -66,12 +66,14 @@ public class BaseController {
 		
 	}
 	
+	
 	@PostMapping("/confirmBooking")
-	public ResponseEntity<?> confirmBooking(@RequestParam("name") String name,@RequestParam("email") String email,
-			@RequestHeader(value = Constants.BOOKINGID, required=true) String bookingid
+	public ResponseEntity<?> confirmBooking(@RequestHeader(value = Constants.BOOKINGID, required=true) String bookingid,
+			@RequestBody String userDetails
 			) {
 		try {
-			return new ResponseEntity<>(bookingService.confirmBooking(Long.parseLong(bookingid), name, email), HttpStatus.OK);
+			//JSONObject jsonObject= new JSONObject(seatsBooked);
+			return new ResponseEntity<>(bookingService.confirmBooking(Long.parseLong(bookingid), userDetails), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			String msg="Error Encountered : "+e;
@@ -80,8 +82,8 @@ public class BaseController {
 		
 	}
 	
-	@PostMapping("/cancelBooking")
-	public ResponseEntity<?> confirmBooking(@RequestHeader(value = Constants.BOOKINGID, required=true) String bookingid
+	@GetMapping("/cancelBooking")
+	public ResponseEntity<?> cancelBooking(@RequestHeader(value = Constants.BOOKINGID, required=true) String bookingid
 			) {
 		try {
 			return new ResponseEntity<>(bookingService.cancelBooking(Long.parseLong(bookingid)), HttpStatus.OK);
