@@ -37,7 +37,7 @@ public class BaseController {
 			JSONArray jsonArray = seatService.getAllSeats(Long.parseLong(showId));
 			return ResponseEntity.status(HttpStatus.OK).body(jsonArray.toString()); 
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class BaseController {
 			return new ResponseEntity<>(bookingService.getBookedSeats(Long.parseLong(showId)), HttpStatus.OK);
 		} catch (Exception e) {
 			// Log.error("Error occured while fetching booked seat details :",e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 	}
 
@@ -61,7 +61,7 @@ public class BaseController {
 		}
 		catch(Exception e) {
 			String msg="Error Encountered : "+e;
-			return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
 		}
 		
 	}
@@ -77,7 +77,7 @@ public class BaseController {
 		}
 		catch(Exception e) {
 			String msg="Error Encountered : "+e;
-			return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
 		}
 		
 	}
@@ -90,7 +90,7 @@ public class BaseController {
 		}
 		catch(Exception e) {
 			String msg="Error Encountered : "+e;
-			return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(msg, HttpStatus.NO_CONTENT);
 		}
 		
 	}
